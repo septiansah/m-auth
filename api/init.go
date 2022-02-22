@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"m-authentication/api/auth"
+	authRepo "m-authentication/api/auth/repository"
 	authUseCase "m-authentication/api/auth/usecase"
 	"m-authentication/api/user"
 	userRepo "m-authentication/api/user/repository"
@@ -32,7 +33,8 @@ func Init(r *gin.Engine) {
 	UserController := user.User{UseCase: iUserUseCase}
 	UserController.User(v1)
 
-	iAuthUseCase :=  authUseCase.NewAuthUseCase(iUserSql)
+	iAuthSql := authRepo.NewAuthSQL(db)
+	iAuthUseCase :=  authUseCase.NewAuthUseCase(iUserSql, iAuthSql)
 	AuthController := auth.Auth{UseCase: iAuthUseCase}
 	AuthController.Auth(v1)
 

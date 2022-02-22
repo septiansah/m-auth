@@ -3,6 +3,7 @@ package usecase
 import (
 	"errors"
 	"fmt"
+	authRepo "m-authentication/api/auth/repository"
 	"m-authentication/api/user/repository"
 	"m-authentication/handlers"
 	"m-authentication/models"
@@ -12,11 +13,13 @@ import (
 
 type authUseCase struct {
 	userSql repository.IUserSql
+	authSql authRepo.IAuthRepoInterface
 }
 
-func NewAuthUseCase(userSql repository.IUserSql) IAuthUsecase {
+func NewAuthUseCase(userSql repository.IUserSql, authSql authRepo.IAuthRepoInterface) IAuthUsecase {
 	return &authUseCase{
 		userSql: userSql,
+		authSql: authSql,
 	}
 }
 
@@ -42,7 +45,9 @@ func (auth authUseCase) Login(user models.UserLogin) (models.Token, error) {
 			if err != nil {
 				return Token, err
 			}
-
+			if err := auth.authSql.StoreToken(usr.Usrid, AccesToken); err != nil {
+				return Token, err
+			}
 			Token.Usrid = usr.Usrid
 			Token.AccesToken = AccesToken
 			Token.DetailUser = append(Token.DetailUser, usr)

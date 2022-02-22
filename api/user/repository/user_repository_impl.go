@@ -22,7 +22,7 @@ func NewUserSQL(db *config.DB) IUserSql {
 func (usr UserSQL) CreateUser(user models.Users) (models.Users, error) {
 	fmt.Println("USER ", user)
 	tx := usr.db.MustBegin()
-	query, err := tx.NamedQuery(`INSERT INTO public.users(
+	query, err := tx.NamedQuery(`INSERT INTO mst_users(
 		usrid, usrname, usremail, usrpassword, usrfirstname, usrlastname, usrphonenum, usrdateofbirth, usrgender, usraddress, usrpostal, usrcity, usrcreated)
 		VALUES (:usrid, :usrname, :usremail, :usrpassword, :usrfirstname, :usrlastname, :usrphonenum, :usrdateofbirth, :usrgender, :usraddress, :usrpostal, :usrcity, :usrcreated) 
 		RETURNING id, usrname, usremail, usrpassword, usrfirstname, usrlastname, usrphonenum, usrdateofbirth, usrgender, usraddress, usrpostal, usrcity, usrcreated`,
@@ -59,7 +59,7 @@ func (usr UserSQL) CreateUser(user models.Users) (models.Users, error) {
 
 func (usr UserSQL) CheckUser(userName string) (bool, error) {
 	var usrName string
-	if err := usr.db.Get(&usrName, `SELECT usrname FROM users WHERE usrname = $1`, userName); err != nil {
+	if err := usr.db.Get(&usrName, `SELECT usrname FROM mst_users WHERE usrname = $1`, userName); err != nil {
 		return false, errors.New("Username is not registered")
 	}
 
@@ -69,7 +69,7 @@ func (usr UserSQL) CheckUser(userName string) (bool, error) {
 func (usr UserSQL) GetUserByUsrname(usrname string) (models.UsersRes, error) {
 	var user models.UsersRes
 	err := usr.db.Get(&user, `SELECT id, usrid, usrname, usremail, usrpassword, usrfirstname, usrlastname, usrphonenum, usrdateofbirth, usrgender, usraddress, usrpostal, usrcity, usrtype, usrcreated
-	FROM public.users WHERE usrname = $1`, usrname)
+	FROM mst_users WHERE usrname = $1`, usrname)
 	if err != nil {
 		return models.UsersRes{}, err
 	}
@@ -80,7 +80,7 @@ func (usr UserSQL) GetUserByUsrname(usrname string) (models.UsersRes, error) {
 func (usr UserSQL) GetUserByUsrId(userId string) (models.UsersRes, error) {
 	var user models.UsersRes
 	err := usr.db.Get(&user, `SELECT id, usrid, usrname, usremail, usrpassword, usrfirstname, usrlastname, usrphonenum, usrdateofbirth, usrgender, usraddress, usrpostal, usrcity, usrtype, usrcreated
-	FROM public.users WHERE usrid = $1`, userId)
+	FROM mst_users WHERE usrid = $1`, userId)
 	if err != nil {
 		return models.UsersRes{}, err
 	}
