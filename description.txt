@@ -1,0 +1,9 @@
+######### Service Authentication ##########
+1. berisi API yg digunakan untuk autentikasi berikut:
+    a. login, menghasilkan JWT masing-masing user untuk disimpan ke session FE agar dapat mengakses service lain.
+    b. logout, men-destroy JWT masing-masing user yang tersimpan di BE.
+    c. get-profile, mengambil informasi masing-masing user. 
+2. db table yg digunakan:
+    a. user, berisi informasi lengkap user dan enkripsi password
+    b. token, berisi token aktif setiap user
+    c. user-log, berisi log aktifitas user [X]
