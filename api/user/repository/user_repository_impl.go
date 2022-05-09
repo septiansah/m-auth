@@ -23,9 +23,9 @@ func (usr UserSQL) CreateUser(user models.Users) (models.Users, error) {
 	fmt.Println("USER ", user)
 	tx := usr.db.MustBegin()
 	query, err := tx.NamedQuery(`INSERT INTO mst_users(
-		usrid, usrname, usremail, usrpassword, usrfirstname, usrlastname, usrphonenum, usrdateofbirth, usrgender, usraddress, usrpostal, usrcity, usrcreated)
+		usrid, usrname, usremail, usrpassword, usrfirstname, usrlastname, usrphonenum, usrdateofbirth, usrgender, usraddress, usrpostal, usrcity, created_date)
 		VALUES (:usrid, :usrname, :usremail, :usrpassword, :usrfirstname, :usrlastname, :usrphonenum, :usrdateofbirth, :usrgender, :usraddress, :usrpostal, :usrcity, :usrcreated) 
-		RETURNING id, usrname, usremail, usrpassword, usrfirstname, usrlastname, usrphonenum, usrdateofbirth, usrgender, usraddress, usrpostal, usrcity, usrcreated`,
+		RETURNING id, usrname, usremail, usrpassword, usrfirstname, usrlastname, usrphonenum, usrdateofbirth, usrgender, usraddress, usrpostal, usrcity, created_date`,
 		map[string]interface{}{
 			"usrid":          user.Usrid,
 			"usrname":        user.Usrname,
@@ -39,7 +39,7 @@ func (usr UserSQL) CreateUser(user models.Users) (models.Users, error) {
 			"usraddress":     user.Usraddress,
 			"usrpostal":      user.Usrpostal,
 			"usrcity":        user.Usrcity,
-			"usrcreated":     user.Usrcreated,
+			"usrcreated":     user.Created_date,
 		})
 
 	if err != nil {

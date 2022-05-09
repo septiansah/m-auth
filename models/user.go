@@ -3,20 +3,20 @@ package models
 import "time"
 
 type Users struct {
-	ID             int       `json:"ID"`
-	Usrid          string    `json:"usrID"`
-	Usrname        string    `json:"username"`
-	Usremail       string    `json:"userEmail"`
-	Usrpassword    string    `json:"userPassword"`
-	Usrfirstname   string    `json:"userFirstName"`
-	Usrlastname    string    `json:"userLastName"`
-	Usrphonenum    string    `json:"usrPhoneNumber"`
-	Usrdateofbirth string    `json:"usrDateOfBirth"`
-	Usrgender      string    `json:"usrGender"`
-	Usraddress     string    `json:"usrAddress"`
-	Usrpostal      string    `json:"usrPostal"`
-	Usrcity        string    `json:"usrCity"`
-	Usrcreated     time.Time `json:"usrCreated"`
+	ID             int    `json:"ID"`
+	Usrid          string `json:"usrID"`
+	Usrname        string `json:"username"`
+	Usremail       string `json:"userEmail"`
+	Usrpassword    string `json:"userPassword"`
+	Usrfirstname   string `json:"userFirstName"`
+	Usrlastname    string `json:"userLastName"`
+	Usrphonenum    string `json:"usrPhoneNumber"`
+	Usrdateofbirth string `json:"usrDateOfBirth"`
+	Usrgender      string `json:"usrGender"`
+	Usraddress     string `json:"usrAddress"`
+	Usrpostal      string `json:"usrPostal"`
+	Usrcity        string `json:"usrCity"`
+	Created_date   int    `json:"createdDate"`
 }
 
 type ShortProfile struct {
